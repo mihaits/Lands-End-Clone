@@ -14,8 +14,8 @@ public class PuzzleNode : MonoBehaviour
         _collider = GetComponent<Collider>();
     }
 
-    public void Update()
+    public void OnClick()
     {
-        
+        Debug.Log($"bonk: {Type}");
     }
 }

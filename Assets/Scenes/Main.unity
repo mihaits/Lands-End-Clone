@@ -372,6 +372,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LookSpeed: 5
   MoveSpeed: 5
+  RaycastController: {fileID: 963194230}
 --- !u!114 &963194230
 MonoBehaviour:
   m_ObjectHideFlags: 0

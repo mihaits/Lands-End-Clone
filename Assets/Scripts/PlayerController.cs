@@ -5,15 +5,30 @@ public class PlayerController : MonoBehaviour
     public float LookSpeed = 5;
     public float MoveSpeed = 5;
 
+    public RaycastController RaycastController;
+
     private float _lookUp;
     private float _lookRight;
 
     private float _moveForward;
     private float _moveRight;
 
+    private bool _mouseDown = false;
+
     public void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void FixedUpdate()
+    {
+        if (Input.GetMouseButton(0) && !_mouseDown)
+        {
+            _mouseDown = true;
+            RaycastController.OnClick();
+        }
+        else if (!Input.GetMouseButton(0) && _mouseDown)
+            _mouseDown = false;
     }
 
     public void Update()
