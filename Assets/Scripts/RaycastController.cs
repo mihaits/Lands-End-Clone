@@ -13,8 +13,6 @@ public class RaycastController : MonoBehaviour
     public void OnClick()
     {
         if (_focusedNode != null)
-        {
             _focusedNode.OnClick();
-        }
     }
 }
