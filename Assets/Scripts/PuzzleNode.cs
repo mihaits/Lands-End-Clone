@@ -7,49 +7,56 @@ public class PuzzleNode : MonoBehaviour
     public NodeType Type = NodeType.Middle;
     public string PuzzleId;
 
+    public LineRenderer Line;
+    public MeshRenderer Mark;
+
+    public bool IsDrawingLine;
+
     public bool IsMarked
     {
         get => Mark.enabled;
         set => Mark.enabled = value;
     }
 
-    public MeshRenderer Mark;
+    public Collider Collider;
 
-    private Collider _collider;
+    private float _distanceToCamera;
 
     public void Start()
     {
-        _collider = GetComponent<Collider>();
+        Collider = GetComponent<Collider>();
+    }
+
+    public void StartLine()
+    {
+        _distanceToCamera = RaycastController.GetDistanceToCamera(transform.position);
+        Line.enabled = true;
+        IsDrawingLine = true;
+    }
+
+    public void FinishLine(Vector3 end)
+    {
+        Line.SetPositions(new[] {transform.position, end});
+        IsDrawingLine = false;
+    }
+
+    public void ResetLine()
+    {
+        Line.enabled = false;
+        IsDrawingLine = false;
+    }
+
+    public void Update()
+    {
+        if (IsDrawingLine)
+            Line.SetPositions(new[]
+            {
+                transform.position, RaycastController.GetPosInCenterOfView(_distanceToCamera)
+            });
     }
 
     public void OnClick()
     {
-        switch (Type)
-        {
-            case NodeType.Start:
-                if (!PuzzleController.IsPuzzleStarted)
-                {
-                    PuzzleController.StartPuzzle(PuzzleId);
-                    IsMarked = true;
-                }
-                else
-                    Debug.Log("nope");
-                break;
-
-            case NodeType.Middle:
-                if (PuzzleController.IsPuzzleStarted)
-                    IsMarked = true;
-                else
-                    Debug.Log("nope");
-                break;
-
-            case NodeType.Finish:
-                Debug.Log(
-                    PuzzleController.IsPuzzleStarted && PuzzleController.AreAllNodesMarked()
-                    ? "win" : "nope");
-
-                PuzzleController.ResetPuzzle();
-                break;
-        }
+        PuzzleController.OnClickNode(this);
     }
 }
