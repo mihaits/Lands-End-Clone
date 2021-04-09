@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class PuzzleController : MonoBehaviour
+public class PuzzleLogic : MonoBehaviour
 {
     public static bool IsPuzzleStarted;
 

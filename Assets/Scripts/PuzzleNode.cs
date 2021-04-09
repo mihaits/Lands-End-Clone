@@ -82,6 +82,6 @@ public class PuzzleNode : MonoBehaviour
     public void OnClick()
     {
         if (_focusCoords.magnitude < _clickRadius)
-            PuzzleController.OnClickNode(this);
+            PuzzleLogic.OnClickNode(this);
     }
 }
