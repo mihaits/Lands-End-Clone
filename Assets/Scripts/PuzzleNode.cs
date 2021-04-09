@@ -1,4 +1,5 @@
-using UnityEngine; 
+using UnityEngine;
+using UnityEngine.UI;
 
 public enum NodeType { Middle, Start, Finish }
 
@@ -9,6 +10,7 @@ public class PuzzleNode : MonoBehaviour
 
     public LineRenderer Line;
     public MeshRenderer Mark;
+    public Collider Collider;
 
     public bool IsDrawingLine;
 
@@ -18,18 +20,14 @@ public class PuzzleNode : MonoBehaviour
         set => Mark.enabled = value;
     }
 
-    public Collider Collider;
+    public Image FocusHalo;
+    public Mask FocusImageMask;
 
     private bool _isFocused;
     private Vector2 _focusCoords;
     private float _clickRadius = .15f;
 
     private float _distanceToCamera;
-
-    public void Start()
-    {
-        Collider = GetComponent<Collider>();
-    }
 
     public void StartLine()
     {
@@ -67,6 +65,7 @@ public class PuzzleNode : MonoBehaviour
     public void OnFocus()
     {
         _isFocused = true;
+        FocusHalo.enabled = true;
     }
 
     public void UpdateFocusHit(Vector3 point)
@@ -77,6 +76,7 @@ public class PuzzleNode : MonoBehaviour
     public void OnFocusExit()
     {
         _isFocused = false;
+        FocusHalo.enabled = false;
     }
 
     public void OnClick()
