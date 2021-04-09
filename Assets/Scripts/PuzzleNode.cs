@@ -18,10 +18,11 @@ public class PuzzleNode : MonoBehaviour
         set => Mark.enabled = value;
     }
 
-    private bool _isFocused;
-    private Vector3 _focusPoint;
-
     public Collider Collider;
+
+    private bool _isFocused;
+    private Vector2 _focusCoords;
+    private float _clickRadius = .15f;
 
     private float _distanceToCamera;
 
@@ -70,7 +71,7 @@ public class PuzzleNode : MonoBehaviour
 
     public void UpdateFocusHit(Vector3 point)
     {
-        _focusPoint = point;
+        _focusCoords = transform.InverseTransformPoint(point);
     }
 
     public void OnFocusExit()
@@ -80,6 +81,7 @@ public class PuzzleNode : MonoBehaviour
 
     public void OnClick()
     {
-        PuzzleController.OnClickNode(this);
+        if (_focusCoords.magnitude < _clickRadius)
+            PuzzleController.OnClickNode(this);
     }
 }
