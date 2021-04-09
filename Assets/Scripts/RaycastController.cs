@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class RaycastController : MonoBehaviour
 {
-    private PuzzleNode _focusedNode;
+    private Collider _previouslyFocusedCollider = new Collider();
+    private Collider _focusedCollider;
+    private RaycastHit _hitInfo;
 
     private static Camera _mainCamera;
 
@@ -13,14 +15,54 @@ public class RaycastController : MonoBehaviour
 
     public void FixedUpdate()
     {
-        if (Physics.Raycast(transform.position, transform.forward, out var hitInfo))
-            _focusedNode = hitInfo.collider.gameObject.GetComponent<PuzzleNode>();
+        _previouslyFocusedCollider = _focusedCollider;
+
+        _focusedCollider = 
+            Physics.Raycast(transform.position, transform.forward, out _hitInfo) 
+            ? _hitInfo.collider : null;
+
+        if (_previouslyFocusedCollider != _focusedCollider)
+        {
+            if (_previouslyFocusedCollider != null)
+                OnFocusExit();
+            
+            if (_focusedCollider != null)
+                OnFocus();
+        }
+
+        if (_focusedCollider != null)
+            UpdateFocusHit();
     }
 
-    public void OnClick()
+    private void OnFocus()
     {
-        if (_focusedNode != null)
-            _focusedNode.OnClick();
+        var focusedNode = _focusedCollider.GetComponent<PuzzleNode>();
+        if (focusedNode != null)
+            focusedNode.OnFocus();
+    }
+
+    private void UpdateFocusHit()
+    {
+        var focusedNode = _focusedCollider.GetComponent<PuzzleNode>();
+        if (focusedNode != null)
+            focusedNode.UpdateFocusHit(_hitInfo.point);
+    }
+
+    private void OnFocusExit()
+    {
+        var previouslyFocusedNode = _previouslyFocusedCollider.GetComponent<PuzzleNode>();
+        if (previouslyFocusedNode != null)
+            previouslyFocusedNode.OnFocusExit();
+    }
+
+    public void Click()
+    {
+        if (_focusedCollider != null)
+        {
+            var focusedNode = _focusedCollider.GetComponent<PuzzleNode>();
+            if (focusedNode != null)
+                focusedNode.OnClick();
+        }
     }
 
     public static Vector3 GetPosInCenterOfView(float distance)

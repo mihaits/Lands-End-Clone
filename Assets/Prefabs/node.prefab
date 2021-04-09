@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 3809764716956101171}
   - component: {fileID: 485341193270073762}
   - component: {fileID: 5618507967780030558}
-  - component: {fileID: 4298256842436805210}
   - component: {fileID: 5189230475852945992}
+  - component: {fileID: 8163242838256417361}
   m_Layer: 0
   m_Name: node
   m_TagString: Untagged
@@ -102,21 +102,8 @@ MonoBehaviour:
   PuzzleId: 
   Line: {fileID: 5189230475852945992}
   Mark: {fileID: 8507615208392781677}
+  IsDrawingLine: 0
   Collider: {fileID: 0}
-  _isDrawingLine: 0
---- !u!135 &4298256842436805210
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4748975978385482983}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.4
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!120 &5189230475852945992
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -216,6 +203,19 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!65 &8163242838256417361
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4748975978385482983}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 0.01}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6854985322968378456
 GameObject:
   m_ObjectHideFlags: 0

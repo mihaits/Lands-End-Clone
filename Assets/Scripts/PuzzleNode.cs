@@ -1,4 +1,4 @@
-using UnityEngine;
+using UnityEngine; 
 
 public enum NodeType { Middle, Start, Finish }
 
@@ -17,6 +17,9 @@ public class PuzzleNode : MonoBehaviour
         get => Mark.enabled;
         set => Mark.enabled = value;
     }
+
+    private bool _isFocused;
+    private Vector3 _focusPoint;
 
     public Collider Collider;
 
@@ -53,6 +56,26 @@ public class PuzzleNode : MonoBehaviour
             {
                 transform.position, RaycastController.GetPosInCenterOfView(_distanceToCamera)
             });
+
+        if (_isFocused)
+        {
+            // todo: focus visuals
+        }
+    }
+
+    public void OnFocus()
+    {
+        _isFocused = true;
+    }
+
+    public void UpdateFocusHit(Vector3 point)
+    {
+        _focusPoint = point;
+    }
+
+    public void OnFocusExit()
+    {
+        _isFocused = false;
     }
 
     public void OnClick()
