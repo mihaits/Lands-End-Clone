@@ -14,6 +14,8 @@ public class Manipulator : MonoBehaviour
 
     public void OnClick()
     {
+        PuzzleLogic.ResetPuzzle();
+
         _distance = RaycastController.GetDistanceToCamera(RaycastController.HitInfo.point);
         _grabLocalPos = transform.InverseTransformPoint(RaycastController.HitInfo.point);
         _isManipulating = true;

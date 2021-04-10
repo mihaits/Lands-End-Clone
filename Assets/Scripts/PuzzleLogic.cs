@@ -36,6 +36,8 @@ public class PuzzleLogic : MonoBehaviour
     {
         foreach (var puzzleNode in currentPuzzleNodes)
             puzzleNode.Collider.enabled = false;
+
+        currentPuzzleNodes = null;
     }
 
     public static bool AreAllNodesMarked()
