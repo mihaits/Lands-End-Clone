@@ -58,7 +58,25 @@ public class PuzzleNode : MonoBehaviour
 
         if (_isFocused)
         {
-            // todo: focus visuals
+            // [A, B] --> [a, b]
+            // (val - A) * (b - a) / (B - A) + a
+
+            // distance to center
+            // [0.5                clickRadius                    0]
+            // alpha
+            // [0                       1                         1]
+            // scale
+            // [clickRadius + .5  clickRadius * 2   clickRadius * 2]
+
+
+            var distanceToCenter = _focusCoords.magnitude;
+
+            var color = FocusHalo.color;
+            color.a = (distanceToCenter - .5f) / (_clickRadius - .5f);
+            FocusHalo.color = color;
+
+            var scale = Mathf.Max(distanceToCenter + _clickRadius, _clickRadius * 2);
+            FocusHalo.transform.localScale = new Vector3(scale, scale, 1);
         }
     }
 
