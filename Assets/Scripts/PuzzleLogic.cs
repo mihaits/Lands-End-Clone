@@ -9,6 +9,8 @@ public class PuzzleLogic : MonoBehaviour
     public static IEnumerable<PuzzleNode> currentPuzzleNodes;
     public static PuzzleNode LastNode;
 
+    public const float MaxLineDistance = 2;
+
     public static void StartPuzzle(string puzzleId)
     {
         currentPuzzleNodes = FindObjectsOfType<PuzzleNode>()

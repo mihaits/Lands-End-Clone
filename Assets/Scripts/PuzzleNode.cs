@@ -51,10 +51,15 @@ public class PuzzleNode : MonoBehaviour
     public void Update()
     {
         if (IsDrawingLine)
-            Line.SetPositions(new[]
-            {
-                transform.position, RaycastController.GetPosInCenterOfView(_distanceToCamera)
-            });
+        {
+            var p1 = transform.position;
+            var p2 = RaycastController.GetPosInCenterOfView(_distanceToCamera);
+            
+            if ((p1 - p2).magnitude < PuzzleLogic.MaxLineDistance)
+                Line.SetPositions(new[] { p1, p2 });
+            else
+                PuzzleLogic.ResetPuzzle();
+        }
 
         if (_isFocused)
         {
