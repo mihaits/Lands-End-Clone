@@ -4,9 +4,10 @@ public class RaycastController : MonoBehaviour
 {
     private Collider _previouslyFocusedCollider = new Collider();
     private Collider _focusedCollider;
-    private RaycastHit _hitInfo;
 
     private static Camera _mainCamera;
+
+    public static RaycastHit HitInfo;
 
     public void Start()
     {
@@ -18,8 +19,8 @@ public class RaycastController : MonoBehaviour
         _previouslyFocusedCollider = _focusedCollider;
 
         _focusedCollider = 
-            Physics.Raycast(transform.position, transform.forward, out _hitInfo) 
-            ? _hitInfo.collider : null;
+            Physics.Raycast(transform.position, transform.forward, out HitInfo) 
+            ? HitInfo.collider : null;
 
         if (_previouslyFocusedCollider != _focusedCollider)
         {
@@ -29,9 +30,6 @@ public class RaycastController : MonoBehaviour
             if (_focusedCollider != null)
                 OnFocus();
         }
-
-        if (_focusedCollider != null)
-            UpdateFocusHit();
     }
 
     private void OnFocus()
@@ -39,13 +37,6 @@ public class RaycastController : MonoBehaviour
         var focusedNode = _focusedCollider.GetComponent<PuzzleNode>();
         if (focusedNode != null)
             focusedNode.OnFocus();
-    }
-
-    private void UpdateFocusHit()
-    {
-        var focusedNode = _focusedCollider.GetComponent<PuzzleNode>();
-        if (focusedNode != null)
-            focusedNode.UpdateFocusHit(_hitInfo.point);
     }
 
     private void OnFocusExit()

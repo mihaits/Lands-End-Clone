@@ -63,6 +63,8 @@ public class PuzzleNode : MonoBehaviour
 
         if (_isFocused)
         {
+            UpdateFocusCoords();
+
             // [A, B] --> [a, b]
             // (val - A) * (b - a) / (B - A) + a
 
@@ -77,7 +79,6 @@ public class PuzzleNode : MonoBehaviour
             // [.5     .45]
             // alpha (v2)
             // [0        1]
-
 
             var distanceToCenter = _focusCoords.magnitude;
 
@@ -100,15 +101,15 @@ public class PuzzleNode : MonoBehaviour
         }
     }
 
+    private void UpdateFocusCoords()
+    {
+        _focusCoords = transform.InverseTransformPoint(RaycastController.HitInfo.point);
+    }
+
     public void OnFocus()
     {
         _isFocused = true;
         FocusHalo.enabled = true;
-    }
-
-    public void UpdateFocusHit(Vector3 point)
-    {
-        _focusCoords = transform.InverseTransformPoint(point);
     }
 
     public void OnFocusExit()
