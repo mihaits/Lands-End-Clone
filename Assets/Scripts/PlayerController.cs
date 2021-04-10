@@ -28,7 +28,11 @@ public class PlayerController : MonoBehaviour
             RaycastController.Click();
         }
         else if (!Input.GetMouseButton(0) && _mouseDown)
+        {
             _mouseDown = false;
+            RaycastController.ClickUp();
+        }
+
     }
 
     public void Update()

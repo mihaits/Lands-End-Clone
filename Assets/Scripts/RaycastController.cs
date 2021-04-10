@@ -8,6 +8,8 @@ public class RaycastController : MonoBehaviour
     private static Camera _mainCamera;
 
     public static RaycastHit HitInfo;
+    private PuzzleNode _clickedNode;
+    private Manipulator _clickedManipulatable;
 
     public void Start()
     {
@@ -52,8 +54,24 @@ public class RaycastController : MonoBehaviour
         {
             var focusedNode = _focusedCollider.GetComponent<PuzzleNode>();
             if (focusedNode != null)
-                focusedNode.OnClick();
+            {
+                _clickedNode = focusedNode;
+                _clickedNode.OnClick();
+            }
+
+            var focusedManipulatable = _focusedCollider.GetComponent<Manipulator>();
+            if (focusedManipulatable != null)
+            {
+                _clickedManipulatable = focusedManipulatable;
+                _clickedManipulatable.OnClick();
+            }
         }
+    }
+
+    public void ClickUp()
+    {
+        if (_clickedManipulatable != null)
+            _clickedManipulatable.OnClickUp();
     }
 
     public static Vector3 GetPosInCenterOfView(float distance)
