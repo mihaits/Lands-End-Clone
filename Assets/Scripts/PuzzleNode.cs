@@ -21,7 +21,7 @@ public class PuzzleNode : MonoBehaviour
     }
 
     public Image FocusHalo;
-    public Mask FocusImageMask;
+    public RectMask2D FocusEffectMask;
 
     private bool _isFocused;
     private Vector2 _focusCoords;
@@ -68,15 +68,30 @@ public class PuzzleNode : MonoBehaviour
             // scale
             // [clickRadius + .5  clickRadius * 2   clickRadius * 2]
 
+            // dtc
+            // [.5     .45]
+            // alpha (v2)
+            // [0        1]
+
 
             var distanceToCenter = _focusCoords.magnitude;
 
             var color = FocusHalo.color;
-            color.a = (distanceToCenter - .5f) / (_clickRadius - .5f);
+            // color.a = (distanceToCenter - .5f) / (_clickRadius - .5f);
+            color.a = (distanceToCenter - .5f) / -.05f; // v2
             FocusHalo.color = color;
 
-            var scale = Mathf.Max(distanceToCenter + _clickRadius, _clickRadius * 2);
+            // var scale = Mathf.Max(distanceToCenter + _clickRadius, _clickRadius * 2);
+            var scale = Mathf.Max(distanceToCenter * 2, _clickRadius * 2);
             FocusHalo.transform.localScale = new Vector3(scale, scale, 1);
+
+            FocusEffectMask.padding = new Vector4
+            (
+                  _focusCoords.x + .1f,
+                  _focusCoords.y + .1f,
+                - _focusCoords.x + .1f,
+                - _focusCoords.y + .1f
+            );
         }
     }
 
