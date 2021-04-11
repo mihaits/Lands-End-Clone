@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,6 +30,8 @@ public class PuzzleNode : MonoBehaviour
 
     private float _distanceToCamera;
 
+    private Tween _lineColorTween;
+
     public void StartLine()
     {
         _distanceToCamera = RaycastController.GetDistanceToCamera(transform.position);
@@ -42,10 +45,23 @@ public class PuzzleNode : MonoBehaviour
         IsDrawingLine = false;
     }
 
-    public void ResetLine()
+    public void ResetLine(bool puzzleComplete)
     {
-        Line.enabled = false;
-        IsDrawingLine = false;
+        _lineColorTween?.Kill();
+
+        _lineColorTween = Line.material
+            .DOColor(puzzleComplete 
+                ? new Color(0, 0, 0, 0) 
+                : new Color(1, 1, 1, 0), 
+                puzzleComplete ? 1 : .5f)
+            .OnComplete(() =>
+            {
+                Line.enabled = false;
+                IsDrawingLine = false;
+
+                Line.sharedMaterial.color = Color.white;
+                _lineColorTween = null;
+            });
     }
 
     public void Update()

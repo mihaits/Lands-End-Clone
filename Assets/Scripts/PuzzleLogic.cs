@@ -26,7 +26,7 @@ public class PuzzleLogic : MonoBehaviour
         foreach (var puzzleNode in currentPuzzleNodes)
         {
             puzzleNode.IsMarked = false;
-            puzzleNode.ResetLine();
+            puzzleNode.ResetLine(false);
         }
 
         IsPuzzleStarted = false;
@@ -35,7 +35,10 @@ public class PuzzleLogic : MonoBehaviour
     public static void FinishPuzzle()
     {
         foreach (var puzzleNode in currentPuzzleNodes)
+        {
             puzzleNode.Collider.enabled = false;
+            puzzleNode.ResetLine(true);
+        }
 
         currentPuzzleNodes = null;
     }
