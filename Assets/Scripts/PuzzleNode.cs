@@ -77,7 +77,7 @@ public class PuzzleNode : MonoBehaviour
                 PuzzleLogic.ResetPuzzle();
         }
 
-        if (_isFocused)
+        if (_isFocused && !IsMarked)
         {
             UpdateFocusCoords();
 
@@ -137,6 +137,10 @@ public class PuzzleNode : MonoBehaviour
     public void OnClick()
     {
         if (_focusCoords.magnitude < _clickRadius)
+        {
             PuzzleLogic.OnClickNode(this);
+            FocusHalo.DOColor(new Color(1, 1, 1, 0), .25f);
+            FocusHalo.transform.DOScale(Vector3.zero, .25f);
+        }
     }
 }
