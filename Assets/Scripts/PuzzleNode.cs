@@ -72,7 +72,7 @@ public class PuzzleNode : MonoBehaviour
             var p1 = transform.position;
             var p2 = RaycastController.GetPosInCenterOfView(_distanceToCamera);
             
-            if ((p1 - p2).magnitude < PuzzleLogic.MaxLineDistance)
+            if ((p1 - p2).magnitude + _clickRadius < PuzzleLogic.MaxLineDistance)
                 Line.SetPositions(new[] { p1, p2 });
             else
                 PuzzleLogic.ResetPuzzle();
