@@ -30,8 +30,6 @@ public class PuzzleLogic : MonoBehaviour
         }
 
         IsPuzzleStarted = false;
-
-        Debug.Log("reset");
     }
 
     public static void FinishPuzzle()
@@ -43,8 +41,6 @@ public class PuzzleLogic : MonoBehaviour
         }
 
         currentPuzzleNodes = null;
-
-        Debug.Log("finish");
     }
 
     public static bool AreAllNodesMarked()
