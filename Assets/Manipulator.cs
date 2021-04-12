@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Manipulator : MonoBehaviour
+public class Manipulator : MonoBehaviour, Interactive
 {
     public Rigidbody Rigidbody;
 
@@ -10,8 +10,8 @@ public class Manipulator : MonoBehaviour
     private bool _isManipulating;
     private bool _isFocused;
 
-    public float _forceMultiplier   = 50; // spring  
-    public float _dampingMultiplier = 10; // damper
+    public float ForceMultiplier   = 50; // spring  
+    public float DampingMultiplier = 10; // damper
 
     public void OnFocus()
     {
@@ -52,8 +52,8 @@ public class Manipulator : MonoBehaviour
             var target = RaycastController.GetPosInCenterOfView(_distance);
             var grabPoint = transform.TransformPoint(_grabLocalPos);
 
-            Rigidbody.AddForceAtPosition((target - grabPoint) * _forceMultiplier, grabPoint);
-            Rigidbody.AddForceAtPosition(- Rigidbody.GetPointVelocity(grabPoint) * _dampingMultiplier, grabPoint);
+            Rigidbody.AddForceAtPosition((target - grabPoint) * ForceMultiplier, grabPoint);
+            Rigidbody.AddForceAtPosition(- Rigidbody.GetPointVelocity(grabPoint) * DampingMultiplier, grabPoint);
         }
     }
 }

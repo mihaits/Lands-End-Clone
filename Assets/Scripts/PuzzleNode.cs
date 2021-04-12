@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public enum NodeType { Middle, Start, Finish }
 
-public class PuzzleNode : MonoBehaviour
+public class PuzzleNode : MonoBehaviour, Interactive
 {
     public NodeType Type = NodeType.Middle;
     public string PuzzleId;
@@ -130,4 +130,6 @@ public class PuzzleNode : MonoBehaviour
             FocusHalo.transform.DOScale(Vector3.zero, .25f);
         }
     }
+
+    public void OnClickUp() {}
 }

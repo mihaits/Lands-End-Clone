@@ -8,8 +8,7 @@ public class RaycastController : MonoBehaviour
     private static Camera _mainCamera;
 
     public static RaycastHit HitInfo;
-    private PuzzleNode _clickedNode;
-    private Manipulator _clickedManipulatable;
+    private Interactive _clickedInteractive;
 
     public void Start()
     {
@@ -27,59 +26,41 @@ public class RaycastController : MonoBehaviour
         if (_previouslyFocusedCollider != _focusedCollider)
         {
             if (_previouslyFocusedCollider != null)
-                OnFocusExit();
+                FocusExit();
             
             if (_focusedCollider != null)
-                OnFocus();
+                Focus();
         }
     }
 
-    private void OnFocus()
+    private void Focus()
     {
-        var focusedNode = _focusedCollider.GetComponent<PuzzleNode>();
-        if (focusedNode != null)
-            focusedNode.OnFocus();
-
-        var focusedManipulatable = _focusedCollider.GetComponent<Manipulator>();
-        if (focusedManipulatable != null)
-            focusedManipulatable.OnFocus();
+        var focusedInteractive = _focusedCollider.GetComponent<Interactive>();
+        focusedInteractive?.OnFocus();
     }
 
-    private void OnFocusExit()
+    private void FocusExit()
     {
-        var previouslyFocusedNode = _previouslyFocusedCollider.GetComponent<PuzzleNode>();
-        if (previouslyFocusedNode != null)
-            previouslyFocusedNode.OnFocusExit();
-
-        var previouslyFocusedManipulatable = _previouslyFocusedCollider.GetComponent<Manipulator>();
-        if (previouslyFocusedManipulatable != null)
-            previouslyFocusedManipulatable.OnFocusExit();
+        var previouslyFocusedInteractive = _previouslyFocusedCollider.GetComponent<Interactive>();
+        previouslyFocusedInteractive?.OnFocusExit();
     }
 
     public void Click()
     {
         if (_focusedCollider != null)
         {
-            var focusedNode = _focusedCollider.GetComponent<PuzzleNode>();
-            if (focusedNode != null)
+            var focusedInteractive = _focusedCollider.GetComponent<Interactive>();
+            if (focusedInteractive != null)
             {
-                _clickedNode = focusedNode;
-                _clickedNode.OnClick();
-            }
-
-            var focusedManipulatable = _focusedCollider.GetComponent<Manipulator>();
-            if (focusedManipulatable != null)
-            {
-                _clickedManipulatable = focusedManipulatable;
-                _clickedManipulatable.OnClick();
+                _clickedInteractive = focusedInteractive;
+                _clickedInteractive.OnClick();
             }
         }
     }
 
     public void ClickUp()
     {
-        if (_clickedManipulatable != null)
-            _clickedManipulatable.OnClickUp();
+        _clickedInteractive?.OnClickUp();
     }
 
     public static Vector3 GetPosInCenterOfView(float distance)
