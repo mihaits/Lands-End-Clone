@@ -39,6 +39,10 @@ public class RaycastController : MonoBehaviour
         var focusedNode = _focusedCollider.GetComponent<PuzzleNode>();
         if (focusedNode != null)
             focusedNode.OnFocus();
+
+        var focusedManipulatable = _focusedCollider.GetComponent<Manipulator>();
+        if (focusedManipulatable != null)
+            focusedManipulatable.OnFocus();
     }
 
     private void OnFocusExit()
@@ -46,6 +50,10 @@ public class RaycastController : MonoBehaviour
         var previouslyFocusedNode = _previouslyFocusedCollider.GetComponent<PuzzleNode>();
         if (previouslyFocusedNode != null)
             previouslyFocusedNode.OnFocusExit();
+
+        var previouslyFocusedManipulatable = _previouslyFocusedCollider.GetComponent<Manipulator>();
+        if (previouslyFocusedManipulatable != null)
+            previouslyFocusedManipulatable.OnFocusExit();
     }
 
     public void Click()

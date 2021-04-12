@@ -8,9 +8,22 @@ public class Manipulator : MonoBehaviour
     private Vector3 _grabLocalPos;
 
     private bool _isManipulating;
+    private bool _isFocused;
 
     public float _forceMultiplier   = 50; // spring  
     public float _dampingMultiplier = 10; // damper
+
+    public void OnFocus()
+    {
+        _isFocused = true;
+        UIController.FocusManipulatable();
+    }
+
+    public void OnFocusExit()
+    {
+        _isFocused = false;
+        UIController.FocusExitManipulatable();
+    }
 
     public void OnClick()
     {
@@ -19,11 +32,17 @@ public class Manipulator : MonoBehaviour
         _distance = RaycastController.GetDistanceToCamera(RaycastController.HitInfo.point);
         _grabLocalPos = transform.InverseTransformPoint(RaycastController.HitInfo.point);
         _isManipulating = true;
+
+        UIController.ClickManipulatable();
     }
 
     public void OnClickUp()
     {
         _isManipulating = false;
+
+        UIController.ClickUpManipulatable();
+        if (_isFocused)
+            UIController.FocusManipulatable();
     }
 
     public void FixedUpdate()
