@@ -41,6 +41,8 @@ public class PuzzleLogic : MonoBehaviour
         }
 
         currentPuzzleNodes = null;
+
+        IsPuzzleStarted = false;
     }
 
     public static bool AreAllNodesMarked()
