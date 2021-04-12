@@ -87,7 +87,9 @@ public class PuzzleNode : MonoBehaviour, Interactive
 
             var distanceToCenter = _focusCoords.magnitude;
 
-            var color = FocusHalo.color;
+            
+            var color = distanceToCenter < _clickRadius
+                ? Color.black : Color.white;
             color.a = (distanceToCenter - .5f) / -.05f;
             FocusHalo.color = color;
 
