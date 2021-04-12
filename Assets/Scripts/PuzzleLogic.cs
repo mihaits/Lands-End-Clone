@@ -30,6 +30,8 @@ public class PuzzleLogic : MonoBehaviour
         }
 
         IsPuzzleStarted = false;
+
+        Debug.Log("reset");
     }
 
     public static void FinishPuzzle()
@@ -41,6 +43,8 @@ public class PuzzleLogic : MonoBehaviour
         }
 
         currentPuzzleNodes = null;
+
+        Debug.Log("finish");
     }
 
     public static bool AreAllNodesMarked()
@@ -68,7 +72,7 @@ public class PuzzleLogic : MonoBehaviour
                 break;
 
             case NodeType.Middle:
-                if (IsPuzzleStarted)
+                if (IsPuzzleStarted && NodeDistance(LastNode, node) < MaxLineDistance)
                 {
                     LastNode.FinishLine(node.transform.position);
                     LastNode = node;
@@ -82,7 +86,7 @@ public class PuzzleLogic : MonoBehaviour
             case NodeType.Finish:
                 node.IsMarked = true;
 
-                if (IsPuzzleStarted && AreAllNodesMarked())
+                if (IsPuzzleStarted && AreAllNodesMarked() && NodeDistance(LastNode, node) < MaxLineDistance)
                 {
                     LastNode.FinishLine(node.transform.position);
                     FinishPuzzle();
@@ -95,5 +99,10 @@ public class PuzzleLogic : MonoBehaviour
 
                 break;
         }
+    }
+
+    private static float NodeDistance(PuzzleNode n1, PuzzleNode n2)
+    {
+        return (n1.transform.position - n2.transform.position).magnitude;
     }
 }
