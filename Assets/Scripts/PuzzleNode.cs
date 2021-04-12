@@ -47,6 +47,8 @@ public class PuzzleNode : MonoBehaviour
 
     public void ResetLine(bool puzzleComplete)
     {
+        IsDrawingLine = false;
+
         _lineColorTween?.Kill();
 
         _lineColorTween = Line.material
@@ -57,7 +59,6 @@ public class PuzzleNode : MonoBehaviour
             .OnComplete(() =>
             {
                 Line.enabled = false;
-                IsDrawingLine = false;
 
                 Line.sharedMaterial.color = Color.white;
                 _lineColorTween = null;
