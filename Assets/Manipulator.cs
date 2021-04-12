@@ -31,7 +31,7 @@ public class Manipulator : MonoBehaviour
         if (_isManipulating)
         {
             var target = RaycastController.GetPosInCenterOfView(_distance);
-            var grabPoint = transform.position + transform.rotation * _grabLocalPos;
+            var grabPoint = transform.TransformPoint(_grabLocalPos);
 
             Rigidbody.AddForceAtPosition((target - grabPoint) * _forceMultiplier, grabPoint);
             Rigidbody.AddForceAtPosition(- Rigidbody.GetPointVelocity(grabPoint) * _dampingMultiplier, grabPoint);
