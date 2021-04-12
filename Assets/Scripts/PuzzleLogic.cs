@@ -68,7 +68,7 @@ public class PuzzleLogic : MonoBehaviour
                 break;
 
             case NodeType.Middle:
-                if (IsPuzzleStarted && NodeDistance(LastNode, node) < MaxLineDistance)
+                if (IsPuzzleStarted && NodeDistance(LastNode, node) < MaxLineDistance && !node.IsMarked)
                 {
                     LastNode.FinishLine(node.transform.position);
                     LastNode = node;
