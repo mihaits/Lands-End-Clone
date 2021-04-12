@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class RaycastController : MonoBehaviour
 {
-    private Collider _previouslyFocusedCollider = new Collider();
-    private Collider _focusedCollider;
+    private static Collider _previouslyFocusedCollider = new Collider();
+    private static Collider _focusedCollider;
 
     private static Camera _mainCamera;
 
@@ -84,5 +84,22 @@ public class RaycastController : MonoBehaviour
     public static float GetDistanceToCamera(Vector3 pos)
     {
         return (pos - _mainCamera.transform.position).magnitude;
+    }
+
+    public static bool IsFocusingNode(out float distance)
+    {
+        distance = 0;
+
+        if (_focusedCollider != null)
+        {
+            var focusedNode = _focusedCollider.GetComponent<PuzzleNode>();
+            if (focusedNode != null)
+            {
+                distance = GetDistanceToCamera(HitInfo.point);
+                return true;
+            }
+        }
+
+        return false;
     }
 }

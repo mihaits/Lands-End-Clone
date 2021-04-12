@@ -69,6 +69,9 @@ public class PuzzleNode : MonoBehaviour
     {
         if (IsDrawingLine)
         {
+            if (RaycastController.IsFocusingNode(out var distance))
+                _distanceToCamera = distance;
+
             var p1 = transform.position;
             var p2 = RaycastController.GetPosInCenterOfView(_distanceToCamera);
             
@@ -82,29 +85,12 @@ public class PuzzleNode : MonoBehaviour
         {
             UpdateFocusCoords();
 
-            // [A, B] --> [a, b]
-            // (val - A) * (b - a) / (B - A) + a
-
-            // distance to center
-            // [0.5                clickRadius                    0]
-            // alpha
-            // [0                       1                         1]
-            // scale
-            // [clickRadius + .5  clickRadius * 2   clickRadius * 2]
-
-            // dtc
-            // [.5     .45]
-            // alpha (v2)
-            // [0        1]
-
             var distanceToCenter = _focusCoords.magnitude;
 
             var color = FocusHalo.color;
-            // color.a = (distanceToCenter - .5f) / (_clickRadius - .5f);
-            color.a = (distanceToCenter - .5f) / -.05f; // v2
+            color.a = (distanceToCenter - .5f) / -.05f;
             FocusHalo.color = color;
 
-            // var scale = Mathf.Max(distanceToCenter + _clickRadius, _clickRadius * 2);
             var scale = Mathf.Max(distanceToCenter * 2, _clickRadius * 2);
             FocusHalo.transform.localScale = new Vector3(scale, scale, 1);
 
